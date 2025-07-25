@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                echo '🧹 Cleaning old workspace'
+                deleteDir()  // Wipes workspace
+            }
+        }
         stage('Checkout Code') {
             steps {
                 checkout scm
