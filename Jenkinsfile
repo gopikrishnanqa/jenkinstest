@@ -11,7 +11,7 @@ pipeline {
     environment {
         // Replace with your Docker Hub username or private registry URL
         DOCKER_REGISTRY = 'docker.io' // Or your private registry URL, e.g., 'myregistry.com'
-        DOCKER_HUB_USERNAME = 'your_docker_username' // Your Docker Hub username
+        DOCKER_HUB_USERNAME = 'jgkgopi' // Your Docker Hub username
         // The ID of the Jenkins credential you created for Docker Hub/Registry
         DOCKER_CREDENTIAL_ID = 'docker-hub-credentials'
         // Name of the Docker image
