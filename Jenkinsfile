@@ -10,7 +10,8 @@ pipeline {
         }
         stage('Checkout Code') {
             steps {
-                checkout scm
+                git branch: 'main',
+                url: 'https://github.com/gopikrishnanqa/jenkinstest'
             }
         }
         stage('Verify Workspace') {
