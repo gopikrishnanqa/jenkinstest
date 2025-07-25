@@ -7,6 +7,13 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Verify Workspace') {
+            steps {
+                echo '🔍 Checking workspace contents...'
+                sh 'pwd'         // shows current directory
+                sh 'ls -la'      // lists files in workspace
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
