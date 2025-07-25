@@ -36,7 +36,7 @@ pipeline {
                     . venv/bin/activate
                     pip install --upgrade pip
                     pip install flake8
-                    flake8 . --exit-zero --count --statistics --show-source --max-line-length=100
+                    flake8 . --count --statistics --show-source --max-line-length=100
                 '''
             }
         }
