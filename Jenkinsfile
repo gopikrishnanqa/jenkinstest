@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = 'jgkgopi/fastapi-app:6'
+    }
+
     stages {
         stage('Clean Workspace') {
             steps {
@@ -11,8 +15,8 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-               echo '📥 Checking out Git repository...'
-               checkout scm
+                echo '📥 Checking out Git repository...'
+                checkout scm
             }
         }
 
@@ -22,6 +26,7 @@ pipeline {
                 sh 'pwd'
                 sh 'ls -la'
             }
+        }
 
         stage('Lint') {
             steps {
@@ -32,6 +37,13 @@ pipeline {
                 '''
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                echo '🐳 Building Docker image...'
+                sh 'docker version'
+                sh "docker build -t $IMAGE_NAME ."
+            }
         }
 
         stage('Push to Docker Hub') {
@@ -45,14 +57,15 @@ pipeline {
                     '''
                 }
             }
+        }
+    }
 
-        post {
+    post {
         failure {
             echo '❌ Build failed!'
         }
         success {
             echo '✅ All good!'
         }
-    }
     }
 }
