@@ -45,16 +45,6 @@ pipeline {
                     '''
                 }
             }
-        stage('Push to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker push jgkgopi/fastapi-app:6
-                        docker logout
-                    '''
-                }
-        }
 
         post {
         failure {
