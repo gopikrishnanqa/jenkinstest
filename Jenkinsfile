@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'jgkgopi/fastapi-app:6'
+        IMAGE_NAME = 'jgkgopi/fastapi-app:${BUILD_NUMBER}'
     }
 
     stages {
