@@ -32,7 +32,8 @@ pipeline {
             steps {
                 echo '🔍 Running Python lint with flake8...'
                 sh '''
-                    pip install flake8
+                    apt-get update && apt-get install -y python3 python3-pip
+                    pip3 install flake8
                     flake8 . --exit-zero --count --statistics --show-source --max-line-length=100
                 '''
             }
