@@ -32,8 +32,10 @@ pipeline {
             steps {
                 echo '🔍 Running Python lint with flake8...'
                 sh '''
-                    apt-get update && apt-get install -y python3 python3-pip
-                    pip3 install flake8
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install flake8
                     flake8 . --exit-zero --count --statistics --show-source --max-line-length=100
                 '''
             }
