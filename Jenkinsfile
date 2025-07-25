@@ -22,14 +22,37 @@ pipeline {
                 sh 'pwd'
                 sh 'ls -la'
             }
-        }
 
-        stage('Build Docker Image') {
+        stage('Lint') {
             steps {
-                sh 'echo 🚧 Building Docker image'
-                sh 'docker version'
-                sh 'docker build -t jgkgopi/fastapi-app:6 .'
+                echo '🔍 Running Python lint with flake8...'
+                sh '''
+                    pip install flake8
+                    flake8 . --exit-zero --count --statistics --show-source --max-line-length=100
+                '''
             }
         }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+                        echo 🔐 Logging in to Docker Hub
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                        docker push $IMAGE_NAME
+                        docker logout
+                    '''
+                }
+            }
+
+        post {
+        failure {
+            echo '❌ Build failed!'
+        }
+        success {
+            echo '✅ All good!'
+        }
+    }
     }
 }
