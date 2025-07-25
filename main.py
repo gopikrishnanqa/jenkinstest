@@ -10,3 +10,7 @@ async def root():
 @app.get("/items/{item_id}")
 async def read_item(item_id: int):
     return {"item_id": item_id, "message": "This is an item"}
+
+@app.get("/items/{item_id}")
+async def reads_item(item_id: int):
+    return {"item_id": item_id, "message": "This is an item"}
