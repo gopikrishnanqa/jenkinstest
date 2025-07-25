@@ -1,0 +1,19 @@
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerjenkinsfile
+      args:
+        DOCKER_GROUP_ID: "998" # or match your host's `getent group docker`
+    user: root # << Run as root or drop this and let Docker group access work
+    ports:
+      - "9000:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+
+volumes:
+  jenkins_home:

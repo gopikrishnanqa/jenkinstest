@@ -1,0 +1,19 @@
+FROM jenkins/jenkins:lts
+
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+
+USER root
+
+# Install Docker CLI
+RUN apt-get update && \
+    apt-get install -y docker.io && \
+    rm -rf /var/lib/apt/lists/*
+
+# Dynamically get docker group or create it if it doesn't exist
+ARG DOCKER_GROUP_ID=998
+RUN if ! getent group docker; then \
+    groupadd -g ${DOCKER_GROUP_ID} docker; \
+    fi && \
+    usermod -aG docker jenkins
+
+USER jenkins
