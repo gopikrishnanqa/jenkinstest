@@ -5,26 +5,29 @@ pipeline {
         stage('Clean Workspace') {
             steps {
                 echo '🧹 Cleaning old workspace'
-                deleteDir()  // Wipes workspace
+                deleteDir()
             }
         }
+
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/gopikrishnanqa/jenkinstest'
+                    url: 'https://github.com/gopikrishnanqa/jenkinstest'
             }
         }
+
         stage('Verify Workspace') {
             steps {
                 echo '🔍 Checking workspace contents...'
-                sh 'pwd'         // shows current directory
-                sh 'ls -la'      // lists files in workspace
+                sh 'pwd'
+                sh 'ls -la'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'ls -l'  // confirm files exist
+                sh 'echo 🚧 Building Docker image'
+                sh 'docker version'
                 sh 'docker build -t jgkgopi/fastapi-app:6 .'
             }
         }
